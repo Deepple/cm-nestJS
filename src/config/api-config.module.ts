@@ -1,0 +1,16 @@
+import { Module } from '@nestjs/common';
+import { ApiConfigService } from './api-config.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+@Module({
+  imports: [
+    TypeOrmModule.forRootAsync({
+      imports: [ApiConfigModule],
+      inject: [ApiConfigService],
+      useFactory: (apiconfigService: ApiConfigService) => apiconfigService.postgresConfig,
+    }),
+  ],
+  providers: [ApiConfigService],
+  exports: [ApiConfigService],
+})
+export class ApiConfigModule {}
