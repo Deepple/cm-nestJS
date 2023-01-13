@@ -9,17 +9,13 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     const users = await this.usersRepository.find({ relations: { photos: true }, order: { id: 'asc' } });
-
-    // for (const user of users) {
-    //   console.log(user.photos);
-    // }
     return users;
   }
 
   async createUsers(data: CreateUserDto): Promise<User> {
     const user = this.usersRepository.create(data);
-    console.log(user.photos);
-    return await this.usersRepository.save(user);
+    const result = await this.usersRepository.save(user);
+    return user;
   }
 
   async findUserByStatusId(statusId): Promise<User[]> {
