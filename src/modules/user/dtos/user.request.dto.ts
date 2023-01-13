@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { StatusEnum } from '../entities/user.entity';
 import { Type } from 'class-transformer';
 import { PartialType } from '@nestjs/mapped-types';

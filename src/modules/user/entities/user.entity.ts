@@ -32,7 +32,7 @@ export class User {
   @UpdateDateColumn()
   updatedTime: Date;
 
-  @OneToMany((type) => Photo, (photo) => photo.user)
+  @OneToMany((type) => Photo, (photo) => photo.user, { cascade: ['insert', 'update'] })
   photos: Photo[];
 }
 
