@@ -1,5 +1,9 @@
 # NestJs
 
+## Version
+- node `v18.13.0`
+- Postgres `v14.6`
+
 ## Installation
 
 - Root 경로에 `.env` 파일 생성 (`.env.example` 참조)
