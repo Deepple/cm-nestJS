@@ -1,34 +1,29 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseEnumPipe, ParseIntPipe, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto, UpdateUserDto } from './dtos/user.request.dto';
-import { User } from './entities/user.entity';
+import { UpdateUserDto } from './dtos/user.request.dto';
+import { StatusEnum } from './entities/user.entity';
 
 @Controller('api/users')
 export class UserController {
-  constructor(private readonly usersService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   async getUsers() {
-    return await this.usersService.findAll();
-  }
-
-  @Post()
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return await this.usersService.createUser(createUserDto);
+    return await this.userService.findAll();
   }
 
   @Get('/:id')
   async getUser(@Param('id', ParseIntPipe) id) {
-    return await this.usersService.findOne(id);
+    return await this.userService.findOne(id);
   }
 
   @Post('/:id')
-  async updateUser(@Param('id', ParseIntPipe) id, @Body() data: UpdateUserDto) {
-    return await this.usersService.updateUser(id, data);
+  async updateUser(@Param('id', ParseIntPipe) id, @Body() updateUserDto: UpdateUserDto) {
+    return await this.userService.updateUser(id, updateUserDto);
   }
 
   @Get('/status/:id')
-  async getUsersByTestId(@Param('id', ParseIntPipe) id) {
-    return await this.usersService.findUserByStatusId(id);
+  async getUsersByTestId(@Param('id', ParseIntPipe) statusId) {
+    return await this.userService.findUserByStatusId(statusId);
   }
 }

@@ -1,18 +1,21 @@
-import { IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, Matches, ValidateNested } from 'class-validator';
 import { StatusEnum } from '../entities/user.entity';
 import { Type } from 'class-transformer';
-import { PartialType } from '@nestjs/mapped-types';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
 
 export class CreateUserDto {
   @IsString()
   readonly email: string;
 
+  @IsString()
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/, {
+    message: '한 개 이상의 특수문자, 영어 대/소문자가 포함되고 8자 이상이어야 합니다.',
+  })
+  readonly password: string;
+
   @IsOptional()
   @IsString()
   readonly nickname: string;
-
-  @IsString()
-  readonly password: string;
 
   @IsOptional()
   @IsString()
@@ -27,8 +30,12 @@ export class CreateUserDto {
 }
 
 export class UserPhotoDto {
+  @IsOptional()
+  @IsNumber()
+  readonly id: number;
+
   @IsString()
   readonly url: string;
 }
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {}
+export class UpdateUserDto extends PartialType(OmitType(CreateUserDto, ['password'] as const)) {}

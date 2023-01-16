@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { Exclude, Expose } from 'class-transformer';
 
 export enum StatusEnum {
   ACTIVE = 0,
@@ -7,6 +8,7 @@ export enum StatusEnum {
 }
 
 @Entity({ name: 'user' })
+@Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,6 +20,7 @@ export class User {
   nickname: string;
 
   @Column({ length: 100 })
+  @Exclude()
   password: string;
 
   @Column({ nullable: true, length: 20 })
@@ -26,7 +29,7 @@ export class User {
   @Column({ type: 'int', enum: StatusEnum })
   status: StatusEnum;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamp with time zone' })
   createdTime: Date;
 
   @UpdateDateColumn()
@@ -34,6 +37,11 @@ export class User {
 
   @OneToMany((type) => Photo, (photo) => photo.user, { cascade: ['insert', 'update'] })
   photos: Photo[];
+
+  @Expose()
+  get nameNickname(): string {
+    return `${this.name} ${this.nickname}`;
+  }
 }
 
 @Entity({ name: 'user_photo' })
@@ -44,6 +52,6 @@ export class Photo {
   @Column({ length: 100 })
   url: string;
 
-  @ManyToOne((type) => User, (user) => user.photos)
+  @ManyToOne((type) => User, (user) => user.photos, { nullable: false, onDelete: 'CASCADE' })
   user: User;
 }

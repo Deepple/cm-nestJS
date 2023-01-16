@@ -4,10 +4,10 @@ export class UserChangeName1673405816186 implements MigrationInterface {
   name = 'UserChangeName1673405816186';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "name" TYPE character varying(45)`);
+    await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "name" TYPE character varying(45)`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "name" TYPE character varying`);
+    await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "name" TYPE character varying`);
   }
 }
