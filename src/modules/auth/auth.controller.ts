@@ -9,7 +9,7 @@ export class AuthController {
 
   @Post('/signup')
   async signUp(@Body() createUserDto: CreateUserDto) {
-    await this.authService.signUp(createUserDto);
+    return await this.authService.signUp(createUserDto);
   }
 
   @Post('/signin')

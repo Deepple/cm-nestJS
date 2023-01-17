@@ -8,7 +8,7 @@ import * as bcrypt from 'bcryptjs';
 export class AuthService {
   constructor(private userRepository: UserRepository) {}
 
-  async signUp(createUserDto: CreateUserDto): Promise<void> {
+  async signUp(createUserDto: CreateUserDto): Promise<object> {
     return this.userRepository.createUser(createUserDto);
   }
 

@@ -2,9 +2,9 @@ import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGenerate
 import { Exclude, Expose } from 'class-transformer';
 
 export enum StatusEnum {
-  ACTIVE = 0,
-  STOP = 1,
-  PENDING = 2,
+  ACTIVE,
+  STOP,
+  PENDING,
 }
 
 @Entity({ name: 'user' })
@@ -29,13 +29,13 @@ export class User {
   @Column({ type: 'int', enum: StatusEnum })
   status: StatusEnum;
 
-  @CreateDateColumn({ type: 'timestamp with time zone' })
+  @CreateDateColumn()
   createdTime: Date;
 
   @UpdateDateColumn()
   updatedTime: Date;
 
-  @OneToMany((type) => Photo, (photo) => photo.user, { cascade: ['insert', 'update'] })
+  @OneToMany((type) => Photo, (photo) => photo.user, { cascade: ['insert'] })
   photos: Photo[];
 
   @Expose()

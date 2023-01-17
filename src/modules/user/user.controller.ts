@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, ParseEnumPipe, ParseIntPipe, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dtos/user.request.dto';
-import { StatusEnum } from './entities/user.entity';
 
 @Controller('api/users')
 export class UserController {

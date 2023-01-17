@@ -24,8 +24,6 @@ export class UserService {
   }
 
   async updateUser(id, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.findOne(id);
-    Object.assign(user, updateUserDto);
-    return await this.userRepository.save(user);
+    return await this.userRepository.updateUser(id, updateUserDto);
   }
 }
