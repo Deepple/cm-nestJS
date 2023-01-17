@@ -8,6 +8,7 @@
 
 - Root 경로에 `.env` 파일 생성 (`.env.example` 참조)
 
+
 ```bash
 $ npm install
 ```
