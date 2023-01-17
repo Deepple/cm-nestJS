@@ -1,9 +1,8 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, InternalServerErrorException } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
-import * as process from 'process';
 
 @Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
+export class HTTPExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -14,10 +13,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     const url: string = request.url;
     const error: string = res.error;
-    const timestamp: string = new Date().toISOString();
-
-    console.log(new Date().toLocaleString());
-    console.log(process.env.TZ);
+    const timestamp: string = new Date().toLocaleString();
 
     console.log('요청 url : ', url);
     console.log('error 정보 : ', error);
