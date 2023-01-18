@@ -1,12 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
 
-export enum StatusEnum {
-  ACTIVE,
-  STOP,
-  PENDING,
-}
-
 @Entity({ name: 'user' })
 @Unique(['email'])
 export class User {
@@ -25,9 +19,6 @@ export class User {
 
   @Column({ nullable: true, length: 20 })
   name: string;
-
-  @Column({ type: 'int', enum: StatusEnum })
-  status: StatusEnum;
 
   @CreateDateColumn()
   createdTime: Date;

@@ -1,5 +1,4 @@
-import { IsEnum, IsNumber, IsOptional, IsString, Matches, ValidateNested } from 'class-validator';
-import { StatusEnum } from '../entities/user.entity';
+import { IsNumber, IsOptional, IsString, Matches, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { OmitType, PartialType } from '@nestjs/mapped-types';
 
@@ -21,9 +20,6 @@ export class CreateUserDto {
   @IsString()
   readonly name: string;
 
-  @IsEnum(StatusEnum)
-  readonly status: number;
-
   @Type(() => UserPhotoDto)
   @ValidateNested({ each: true })
   readonly photos: UserPhotoDto[];
@@ -38,4 +34,4 @@ export class UserPhotoDto {
   readonly url: string;
 }
 
-export class UpdateUserDto extends PartialType(OmitType(CreateUserDto, ['password'] as const)) {}
+export class UpdateUserDto extends PartialType(OmitType(CreateUserDto, ['password', 'photos'] as const)) {}
