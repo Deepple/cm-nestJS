@@ -11,13 +11,9 @@ export class HTTPExceptionFilter implements ExceptionFilter {
 
     const res: any = exception.getResponse();
 
-    const url: string = request.url;
-    const error: string = res.error;
-    const timestamp: string = new Date().toLocaleString();
-
-    console.log('요청 url : ', url);
-    console.log('error 정보 : ', error);
-    console.log('발생 시간 : ', timestamp);
+    // const url: string = request.url;
+    // const error: string = res.error;
+    // const timestamp: string = new Date().toLocaleString();
 
     response.status(status).json({
       statusCode: res.statusCode,
