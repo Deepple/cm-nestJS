@@ -2,11 +2,11 @@ import { ClassSerializerInterceptor, MiddlewareConsumer, Module, NestModule } fr
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
 import { ApiConfigModule } from './config/api-config.module';
-import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { LoggerMiddleware } from './middleware/logger.middleware';
 import { AuthModule } from './modules/auth/auth.module';
-import { SuccessInterceptor } from './common/interceptors/success.interceptor';
+import { SuccessInterceptor } from './interceptors/success.interceptor';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { HTTPExceptionFilter } from './common/filters/http-exception.filter';
+import { HTTPExceptionFilter } from './filters/http-exception.filter';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }), ApiConfigModule, UserModule, AuthModule],
