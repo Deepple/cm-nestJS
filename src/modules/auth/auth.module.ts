@@ -5,31 +5,35 @@ import { TypeOrmExModule } from '../../repository/typeorm-ex.module';
 import { UserRepository } from '../user/repositories/user.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from './security/passport.jwt.strategy';
 import { ApiConfigService } from '../../config/api-config.service';
 import { UserModule } from '../user/user.module';
+import { ApiConfigModule } from '../../config/api-config.module';
+import { AccessTokenStrategy } from './security/accessToken.jwt.strategy';
+import { RefreshTokenStrategy } from './security/refreshToken.strategy';
 
 @Module({
   imports: [
     forwardRef(() => UserModule),
+    PassportModule,
     TypeOrmExModule.forCustomRepository([UserRepository]),
     JwtModule.registerAsync({
       useFactory: (configService: ApiConfigService) => ({
-        privateKey: configService.authConfig.privateKey,
-        publicKey: configService.authConfig.publicKey,
+        privateKey: configService.authConfig.refreshPrivateKey,
+        publicKey: configService.authConfig.refreshPublicKey,
         signOptions: {
           algorithm: 'RS256',
+          expiresIn: configService.authConfig.refreshExpirationTime,
         },
         verifyOptions: {
           algorithms: ['RS256'],
         },
       }),
       inject: [ApiConfigService],
+      imports: [ApiConfigModule],
     }),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
-  exports: [JwtStrategy, AuthService],
+  providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],
+  exports: [JwtModule, AuthService],
 })
 export class AuthModule {}
