@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards } from '@ne
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dtos/user.request.dto';
 import { JwtAccessGuard } from '../../guards/jwt-access.guard';
-import { GetUser } from '../../decorators/custom.decorator';
+import { GetUser } from '../../decorators/getUser.decorator';
 
 @Controller('api/users')
 @UseGuards(JwtAccessGuard)

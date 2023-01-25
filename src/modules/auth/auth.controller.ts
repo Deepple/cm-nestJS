@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dtos/user.request.dto';
 import { AuthCredentialsDto } from './dtos/auth.request.dto';
 import { JwtRefreshGuard } from '../../guards/jwt-refresh.guard';
-import { GetUser } from '../../decorators/custom.decorator';
+import { GetUser } from '../../decorators/getUser.decorator';
 
 @Controller('api/auth')
 export class AuthController {
