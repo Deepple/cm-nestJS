@@ -14,8 +14,8 @@ export class UserService {
     const users = await this.userRepository.find({
       relations: ['photos'],
       order: { id: 'asc' },
-      take: page.getLimit(),
-      skip: page.getOffset(),
+      take: page.size,
+      skip: page.offset,
     });
     return new Page(total, page.size, users);
   }

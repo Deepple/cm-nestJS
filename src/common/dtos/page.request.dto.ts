@@ -1,33 +1,20 @@
-import { IsNumber, IsOptional } from 'class-validator';
+import { Min, IsInt, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class PageRequestDto {
   @Type(() => Number)
-  @IsNumber()
+  @IsInt()
   @IsOptional()
-  page?: number | 1;
+  @Min(1)
+  page?: number = 1;
 
   @Type(() => Number)
-  @IsNumber()
+  @IsInt()
   @IsOptional()
-  size?: number | 10;
+  @Min(0)
+  size?: number = 10;
 
-  getOffset(): number {
-    if (this.page < 1 || this.page === null || this.page === undefined) {
-      this.page = 1;
-    }
-
-    if (this.size < 1 || this.size === null || this.size === undefined) {
-      this.size = 10;
-    }
-
-    return (Number(this.page) - 1) * Number(this.size);
-  }
-
-  getLimit(): number {
-    if (this.size < 1 || this.size === null || this.size === undefined) {
-      this.size = 10;
-    }
-    return Number(this.size);
+  get offset(): number {
+    return (this.page - 1) * this.size;
   }
 }
