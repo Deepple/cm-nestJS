@@ -1,11 +1,14 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class PageRequestDto {
-  @IsString()
+  @Type(() => Number)
+  @IsNumber()
   @IsOptional()
   page?: number | 1;
 
-  @IsString()
+  @Type(() => Number)
+  @IsNumber()
   @IsOptional()
   size?: number | 10;
 
