@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dtos/user.request.dto';
 import { JwtAccessGuard } from '../../guards/jwt-access.guard';
 import { GetUser } from '../../decorators/getUser.decorator';
 import { OwnUserGuard } from '../../guards/own-user.guard';
+import { PageRequestDto } from '../../common/dtos/page.request.dto';
 
 @Controller('api/users')
 @UseGuards(JwtAccessGuard)
@@ -11,8 +12,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getUsers(@GetUser() user) {
-    return this.userService.findAll();
+  getUsers(@Query() page: PageRequestDto, @GetUser() user) {
+    return this.userService.findAll(page);
   }
 
   @Get('/:id')
