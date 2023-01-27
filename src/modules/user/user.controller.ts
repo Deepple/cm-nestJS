@@ -12,14 +12,12 @@ export class UserController {
 
   @Get()
   getUsers(@GetUser() user) {
-    console.log(user);
     return this.userService.findAll();
   }
 
   @Get('/:id')
   @UseGuards(OwnUserGuard)
   getUser(@GetUser() user, @Param('id', ParseIntPipe) id) {
-    console.log(user);
     return this.userService.findOne(id);
   }
 
