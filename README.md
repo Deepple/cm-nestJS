@@ -37,3 +37,15 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## API
+
+### Auth
+- sign up
+- login
+- refresh (jwt refresh token)
+
+### User
+- users list
+- get user
+- modify user
