@@ -4,9 +4,7 @@ import { DataSource } from 'typeorm';
 import { TYPEORM_EX_CUSTOM_REPOSITORY } from './typeorm-ex.decorator';
 
 export class TypeOrmExModule {
-  public static forCustomRepository<T extends new (...args: any[]) => any>(
-    repositories: T[],
-  ): DynamicModule {
+  public static forCustomRepository<T extends new (...args: any[]) => any>(repositories: T[]): DynamicModule {
     const providers: Provider[] = [];
 
     for (const repository of repositories) {
@@ -21,11 +19,7 @@ export class TypeOrmExModule {
         provide: repository,
         useFactory: (dataSource: DataSource): typeof repository => {
           const baseRepository = dataSource.getRepository<any>(entity);
-          return new repository(
-            baseRepository.target,
-            baseRepository.manager,
-            baseRepository.queryRunner,
-          );
+          return new repository(baseRepository.target, baseRepository.manager, baseRepository.queryRunner);
         },
       });
     }
